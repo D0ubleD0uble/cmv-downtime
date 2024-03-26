@@ -35,12 +35,10 @@ class DowntimeActions {
     static TEMPLATES = {
         DOWNTIMEACTION: `modules/${this.ID}/templates/downtime.hbs`
     }
+
 }
 
 class DowntimeActionData {
-    static getDowntimesForUser(userId) {
-        return game.users.get(userId)?.getFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS);
-    }
 
     static createDowntime(userId, downtimeData) {
         // generate a random id for this new downtime and populate the userId
@@ -58,5 +56,45 @@ class DowntimeActionData {
 
         // update the database with the new downtimes
         return game.users.get(userId)?.setFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS, newDowntimes);
+    }
+
+    static getDowntimesForUser(userId) {
+        return game.users.get(userId)?.getFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS);
+    }
+
+    static get allDowntimes() {
+        const allDowntimes = game.users.reduce((accumulator, user) => {
+            const userDowntimes = this.getDowntimesForUser(user.id);
+            return {
+                ...accumulator,
+                ...userDowntimes
+            }
+        }, {});
+
+        return allDowntimes;
+    }
+
+    static updateDowntime(downtimeId, updateData) {
+        const relevantDowntime = this.allDowntimes[downtimeId];
+
+        // construct the update to send
+        const update = {
+            [downtimeId]: updateData
+        }
+
+        // update the database with the updated downtime
+        return game.users.get(relevantDowntime.userId)?.setFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS, update);
+    }
+
+    static deleteDowntime(downtimeId) {
+        const relevantDowntime = this.allDowntimes[downtimeId];
+
+        // Foundry specific syntax required to delete a key from a persisted object in the database
+        const keyDeletion = {
+            [`-=${downtimeId}`]: null
+        }
+
+        // update the database with the deleted downtime
+        return game.users.get(relevantDowntime.userId)?.setFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS, keyDeletion);
     }
 }
