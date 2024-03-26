@@ -4,6 +4,7 @@
         "add-downtime": "Add Downtime Action",
         "delete-downtime": "Delete Downtime Action",
         "edit-downtime": "Edit Downtime Action",
-        "submit-downtime": "Submit Downtime Action"
+        "submit": "Submit",
+        "close": "Close"
     }
 }

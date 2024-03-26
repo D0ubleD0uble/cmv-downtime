@@ -2,14 +2,15 @@
  * A single Downtime Action drafted, submitted, rejected, accepted, or final
  * @typedef {Object} DowntimeAction
  * @property {string} id - A unique ID to identify this todo.
- * @property {string} status - State of downtime action
+ * @property {string} status - state of downtime action
+ * @property {string} character - name of the character
  * @property {string} category - type of downtime action
  * @property {string} description - describes the specifics of the goals
  * @property {string} location - the place the downtime is happening
  * @property {string} costs - required expenses, or extra contributions
  * @property {string} contingencies - plans if things go wrong
  * @property {string} rolls - rolls desired to use
- * @property {string} userId - rolls desired to use
+ * @property {string} userId - creating user of the downtime action
  */
 
 console.log("cmv-downtime | Hello World! This code runs immediately when the file is loaded.");
@@ -38,7 +39,8 @@ class DowntimeActions {
     }
 
     static initialize() {
-        this.DowntimeActionsConfig = new DowntimeListConfig();
+        this.DowntimeListConfig = new DowntimeListConfig();
+        this.DowntimeActionConfig = new DowntimeActionConfig();
     }
 }
 
@@ -64,6 +66,12 @@ class DowntimeActionData {
 
     static getDowntimesForUser(userId) {
         return game.users.get(userId)?.getFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS);
+    }
+
+    static getDowntimeForUser(userId, downtimeId) {
+        const relevantDowntime = this.getDowntimesForUser(userId)[downtimeId];
+
+        return relevantDowntime;
     }
 
     static get allDowntimes() {
@@ -120,7 +128,7 @@ Hooks.on('renderPlayerList', (playerList, html) => {
     // register an event listener for this button
     html.on('click', '.downtime-action-icon-button', (event) => {
         const userId = $(event.currentTarget).parents('[data-user-id]')?.data()?.userId;
-        DowntimeActions.DowntimeActionsConfig.render(true, { userId });
+        DowntimeActions.DowntimeListConfig.render(true, { userId });
     });
 });
 
@@ -171,11 +179,66 @@ class DowntimeListConfig extends FormApplication {
                 break;
             }
 
+            case 'edit': {
+                const userId = $(event.currentTarget).parents('[data-user-id]')?.data()?.userId;
+                DowntimeActions.DowntimeActionConfig.render(true, { userId: userId, downtimeId: downtimeId });
+                break;
+            }
+
             case 'delete': {
                 await DowntimeActionData.deleteDowntime(downtimeId);
                 this.render();
                 break;
             }
+
+            default:
+                console.log('CMV Downtime | Invalid form action detected.', action);
+        }
+    }
+}
+
+class DowntimeActionConfig extends FormApplication {
+    static get defaultOptions() {
+        const defaults = super.defaultOptions;
+        console.log(defaults);
+
+        const overrrides = {
+            height: 'auto',
+            id: 'downtime-action',
+            template: DowntimeActions.TEMPLATES.DOWNTIMEACTION,
+            title: 'Downtime Action',
+            userId: game.userId,
+            closeOnSubmit: false, // do not close when submitted
+            submitOnChange: true, // submit when any input changes
+        };
+
+        const mergedOptions = foundry.utils.mergeObject(defaults, overrrides);
+        return mergedOptions;
+    }
+
+    getData(options) {
+        return {
+            downtime: DowntimeActionData.getDowntimeForUser(options.userId, options.downtimeId)
+        }
+    }
+
+    async _updateObject(event, formData) {
+        const expandedData = foundry.utils.expandObject(formData);
+        await DowntimeActionData.updateDowntime(this.options.downtimeId, expandedData);
+        this.render();
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+        html.on('click', "[data-action]", this._handleButtonClick.bind(this));
+    }
+
+    async _handleButtonClick(event) {
+        const clickedElement = $(event.currentTarget);
+        const action = clickedElement.data().action;
+        const downtimeId = clickedElement.parents('[data-downtime-id]')?.data()?.downtimeId;
+
+        switch (action) {
 
             default:
                 console.log('CMV Downtime | Invalid form action detected.', action);
