@@ -40,7 +40,6 @@ class DowntimeActions {
 
     static initialize() {
         this.DowntimeListConfig = new DowntimeListConfig();
-        this.DowntimeActionConfig = new DowntimeActionConfig();
     }
 }
 
@@ -181,7 +180,10 @@ class DowntimeListConfig extends FormApplication {
             }
 
             case 'edit': {
-                DowntimeActions.DowntimeActionConfig.render(true, { userId: this.options.userId, downtimeId: downtimeId });
+                console.log('CMV Downtime | id', downtimeId);
+                downtimeData = DowntimeActionData.getDowntimeForUser(this.options.userId, downtimeId);
+                dtaForm = new DowntimeActionConfig(downtimeData);
+                dtaForm.render(true);
                 break;
             }
 
@@ -200,7 +202,6 @@ class DowntimeListConfig extends FormApplication {
 class DowntimeActionConfig extends FormApplication {
     static get defaultOptions() {
         const defaults = super.defaultOptions;
-        console.log(defaults);
 
         const overrrides = {
             height: 'auto',
@@ -214,13 +215,6 @@ class DowntimeActionConfig extends FormApplication {
 
         const mergedOptions = foundry.utils.mergeObject(defaults, overrrides);
         return mergedOptions;
-    }
-
-    getData(options) {
-        console.log('CMV Downtime | options', options);
-        return {
-            downtime: DowntimeActionData.getDowntimeForUser(options.userId, options.downtimeId)
-        }
     }
 
     async _updateObject(event, formData) {
