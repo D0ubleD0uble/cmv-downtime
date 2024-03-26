@@ -1,3 +1,5 @@
 {
-    "CMV-Downtime": {}
+    "CMV-Downtime": {
+        "button-title": "Open Downtime actions"
+    }
 }

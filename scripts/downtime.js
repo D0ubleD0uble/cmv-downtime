@@ -98,3 +98,19 @@ class DowntimeActionData {
         return game.users.get(relevantDowntime.userId)?.setFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS, keyDeletion);
     }
 }
+
+Hooks.on('renderPlayerList', (playerList, html) => {
+    // find the element which has our logged in user's id
+    const loggedInUserListItem = html.find(`[data-user-id="${game.userId}"]`);
+
+    // create localized tooltip
+    const tooltip = game.i18n.localize('CMV-Downtime.button-title');
+
+    //insert a button at the end of this element
+    loggedInUserListItem.append("<button type='button' class='downtime-action-icon-button flex0'><i class='fas fa-tasks'></i></button>");
+
+    // register an event listener for this button
+    html.on('click', '.downtime-action-icon-button', (event) => {
+        console.log('CMV-Downtime | Button Clicked.');
+    });
+});
