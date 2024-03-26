@@ -1,0 +1,16 @@
+<form>
+    <ul class="downtime-list flexcol">
+        {{#each downtimes}}
+        <li class="flexrow" data-downtime-id="{{id}}">
+            <input type="text" value="{{category}}" name="{{id}}.category" data-dtype="String" />
+            <input type="text" value="{{status}}" name="{{id}}.status" data-dtype="String" />
+            <button type="button" title="{{localize " CMV-Downtime.delete-downtime"}}" data-action="delete"
+                class="flex0 downtime-list-icon-button">
+                <i class="fas fa-trash"></i>
+            </button>
+        </li>
+        {{/each}}
+    </ul>
+    <button type="button" data-action="create"><i class="fas fa-plus"></i>"{{localize
+        "CMV-Downtime.add-downtime"}}"</button>
+</form>

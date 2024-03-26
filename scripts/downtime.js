@@ -114,3 +114,26 @@ Hooks.on('renderPlayerList', (playerList, html) => {
         console.log('CMV-Downtime | Button Clicked.');
     });
 });
+
+class DowntimeActionsConfig extends FormApplication {
+    static get defaultOptions() {
+        const defaults = super.defaultOptions;
+
+        const overrrides = {
+            height: 'auto',
+            id: 'downtime-list',
+            template: DowntimeActions.TEMPLATES.DOWNTIMEACTION,
+            title: 'Downtime Actions',
+            userId: game.userId,
+        };
+
+        const mergedOptions = foundry.utils.mergeObject(defaults, overrrides);
+        return mergedOptions;
+    }
+
+    getData(options) {
+        return {
+            downtimes: DowntimeActionData.getDowntimesForUser(options.userId)
+        }
+    }
+}
