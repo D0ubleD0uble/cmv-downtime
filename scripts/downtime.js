@@ -171,6 +171,7 @@ class DowntimeListConfig extends FormApplication {
         const clickedElement = $(event.currentTarget);
         const action = clickedElement.data().action;
         const downtimeId = clickedElement.parents('[data-downtime-id]')?.data()?.downtimeId;
+        console.log('CMV Downtime | button_clicked with downtime id:', downtimeId);
 
         switch (action) {
             case 'create': {
@@ -180,8 +181,7 @@ class DowntimeListConfig extends FormApplication {
             }
 
             case 'edit': {
-                const userId = $(event.currentTarget).parents('[data-user-id]')?.data()?.userId;
-                DowntimeActions.DowntimeActionConfig.render(true, { userId: userId, downtimeId: downtimeId });
+                DowntimeActions.DowntimeActionConfig.render(true, { userId: this.options.userId, downtimeId: downtimeId });
                 break;
             }
 
@@ -217,6 +217,7 @@ class DowntimeActionConfig extends FormApplication {
     }
 
     getData(options) {
+        console.log('CMV Downtime | options', options);
         return {
             downtime: DowntimeActionData.getDowntimeForUser(options.userId, options.downtimeId)
         }
