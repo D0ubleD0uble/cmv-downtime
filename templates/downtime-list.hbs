@@ -2,8 +2,12 @@
     <ul class="downtime-list flexcol">
         {{#each downtimes}}
         <li class="flexrow" data-downtime-id="{{id}}">
-            <input type="text" value="{{category}}" name="{{id}}.category" data-dtype="String" />
-            <input type="text" value="{{status}}" name="{{id}}.status" data-dtype="String" />
+            <label name="{{id}}.category">{{category}}</label>
+            <label name="{{id}}.status">{{status}}</label>
+            <button type="button" title="{{localize " CMV-Downtime.edit-downtime"}}" data-action="edit"
+                class="flex0 downtime-list-icon-button">
+                <i class="fas fa-pencil"></i>
+            </button>
             <button type="button" title="{{localize " CMV-Downtime.delete-downtime"}}" data-action="delete"
                 class="flex0 downtime-list-icon-button">
                 <i class="fas fa-trash"></i>

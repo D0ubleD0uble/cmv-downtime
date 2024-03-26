@@ -3,6 +3,7 @@
         "button-title": "Open Downtime actions",
         "add-downtime": "Add Downtime Action",
         "delete-downtime": "Delete Downtime Action",
+        "edit-downtime": "Edit Downtime Action",
         "submit-downtime": "Submit Downtime Action"
     }
 }

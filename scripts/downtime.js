@@ -33,9 +33,13 @@ class DowntimeActions {
     }
 
     static TEMPLATES = {
-        DOWNTIMEACTION: `modules/${this.ID}/templates/downtime.hbs`
+        DOWNTIMELIST: `modules/${this.ID}/templates/downtime-list.hbs`,
+        DOWNTIMEACTION: `modules/${this.ID}/templates/downtime-action.hbs`
     }
 
+    static initialize() {
+        this.DowntimeActionsConfig = new DowntimeListConfig();
+    }
 }
 
 class DowntimeActionData {
@@ -99,6 +103,10 @@ class DowntimeActionData {
     }
 }
 
+Hooks.once('init', () => {
+    DowntimeActions.initialize();
+});
+
 Hooks.on('renderPlayerList', (playerList, html) => {
     // find the element which has our logged in user's id
     const loggedInUserListItem = html.find(`[data-user-id="${game.userId}"]`);
@@ -111,20 +119,23 @@ Hooks.on('renderPlayerList', (playerList, html) => {
 
     // register an event listener for this button
     html.on('click', '.downtime-action-icon-button', (event) => {
-        console.log('CMV-Downtime | Button Clicked.');
+        const userId = $(event.currentTarget).parents('[data-user-id]')?.data()?.userId;
+        DowntimeActions.DowntimeActionsConfig.render(true, { userId });
     });
 });
 
-class DowntimeActionsConfig extends FormApplication {
+class DowntimeListConfig extends FormApplication {
     static get defaultOptions() {
         const defaults = super.defaultOptions;
 
         const overrrides = {
             height: 'auto',
             id: 'downtime-list',
-            template: DowntimeActions.TEMPLATES.DOWNTIMEACTION,
+            template: DowntimeActions.TEMPLATES.DOWNTIMELIST,
             title: 'Downtime Actions',
             userId: game.userId,
+            closeOnSubmit: false, // do not close when submitted
+            submitOnChange: true, // submit when any input changes
         };
 
         const mergedOptions = foundry.utils.mergeObject(defaults, overrrides);
@@ -134,6 +145,40 @@ class DowntimeActionsConfig extends FormApplication {
     getData(options) {
         return {
             downtimes: DowntimeActionData.getDowntimesForUser(options.userId)
+        }
+    }
+
+    async _updateObject(event, formData) {
+        const expandedData = foundry.utils.expandObject(formData);
+        await DowntimeActionData.updateUserToDos(this.options.userId, expandedData);
+        this.render();
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+        html.on('click', "[data-action]", this._handleButtonClick.bind(this));
+    }
+
+    async _handleButtonClick(event) {
+        const clickedElement = $(event.currentTarget);
+        const action = clickedElement.data().action;
+        const downtimeId = clickedElement.parents('[data-downtime-id]')?.data()?.downtimeId;
+
+        switch (action) {
+            case 'create': {
+                await DowntimeActionData.createDowntime(this.options.userId);
+                this.render();
+                break;
+            }
+
+            case 'delete': {
+                await DowntimeActionData.deleteDowntime(downtimeId);
+                this.render();
+                break;
+            }
+
+            default:
+                console.log('CMV Downtime | Invalid form action detected.', action);
         }
     }
 }
