@@ -1,25 +1,24 @@
 <form>
     <p>
-        {{#each downtime}}
     <h1>Downtime Action</h1>
     <select name="{{id}}.category">
-        <option value="Carousing - Normal"></option>
-        <option value="Carousing - Classy"></option>
-        <option value="Crafting"></option>
-        <option value="Diplomacy - Face to Face"></option>
-        <option value="Diplomacy - Letters"></option>
-        <option value="Diplomacy - Representative"></option>
-        <option value="Hiring"></option>
-        <option value="Meditation - Focus Points"></option>
-        <option value="Meditation - Focus Spells"></option>
-        <option value="Natural Acquisitions - Fishing"></option>
-        <option value="Natural Acquisitions - Foraging"></option>
-        <option value="Natural Acquisitions - Hunting"></option>
-        <option value="Research - Ask Around"></option>
-        <option value="Research - Divination"></option>
-        <option value="Research - Hit the Books"></option>
-        <option value="Research - Seek Within"></option>
-        <option value="Taming"></option>
+        <option value="Carousing - Normal">Carousing - Normal</option>
+        <option value="Carousing - Classy">Carousing - Classy</option>
+        <option value="Crafting">Crafting</option>
+        <option value="Diplomacy - Face to Face">Diplomacy - Face to Face</option>
+        <option value="Diplomacy - Letters">Diplomacy - Letters</option>
+        <option value="Diplomacy - Representative">Diplomacy - Representative</option>
+        <option value="Hiring">Hiring</option>
+        <option value="Meditation - Focus Points">Meditation - Focus Points</option>
+        <option value="Meditation - Focus Spells">Meditation - Focus Spells</option>
+        <option value="Natural Acquisitions - Fishing">Natural Acquisitions - Fishing</option>
+        <option value="Natural Acquisitions - Foraging">Natural Acquisitions - Foraging</option>
+        <option value="Natural Acquisitions - Hunting">Natural Acquisitions - Hunting</option>
+        <option value="Research - Ask Around">Research - Ask Around</option>
+        <option value="Research - Divination">Research - Divination</option>
+        <option value="Research - Hit the Books">Research - Hit the Books</option>
+        <option value="Research - Seek Within">Research - Seek Within</option>
+        <option value="Taming">Taming</option>
     </select>
     <label name="{{id}}.status">{{status}}</label>
     <input type="text" value="{{character}}" name="{{id}}.character" data-dtype="String" />
@@ -28,7 +27,6 @@
     <input type="text" value="{{costs}}" name="{{id}}.costs" data-dtype="String" />
     <input type="text" value="{{contingencies}}" name="{{id}}.contingencies" data-dtype="String" />
     <input type="text" value="{{rolls}}" name="{{id}}.rolls" data-dtype="String" />
-    {{/each}}
     </p>
     <button type="button" data-action="submit"><i class="fas fa-plus"></i>"{{localize
         "CMV-Downtime.submit"}}"</button>

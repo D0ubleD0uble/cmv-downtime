@@ -40,6 +40,7 @@ class DowntimeActions {
 
     static initialize() {
         this.DowntimeListConfig = new DowntimeListConfig();
+        this.DowntimeActionConfig = new DowntimeActionConfig();
     }
 }
 
@@ -86,7 +87,9 @@ class DowntimeActionData {
     }
 
     static updateDowntime(downtimeId, updateData) {
+        console.log('CMV Downtime | update', downtimeId, updateData);
         const relevantDowntime = this.allDowntimes[downtimeId];
+        console.log('CMV Downtime | save', relevantDowntime);
 
         // construct the update to send
         const update = {
@@ -181,9 +184,9 @@ class DowntimeListConfig extends FormApplication {
 
             case 'edit': {
                 console.log('CMV Downtime | id', downtimeId);
-                downtimeData = DowntimeActionData.getDowntimeForUser(this.options.userId, downtimeId);
-                dtaForm = new DowntimeActionConfig(downtimeData);
-                dtaForm.render(true);
+                var downtimeData = DowntimeActionData.getDowntimeForUser(this.options.userId, downtimeId.toString());
+                console.log('CMV Downtime | data', downtimeData);
+                new DowntimeActionConfig(downtimeData).render(true);
                 break;
             }
 
@@ -200,6 +203,11 @@ class DowntimeListConfig extends FormApplication {
 }
 
 class DowntimeActionConfig extends FormApplication {
+    constructor(data) {
+        super();
+        this.data = data;
+    }
+
     static get defaultOptions() {
         const defaults = super.defaultOptions;
 
@@ -219,8 +227,13 @@ class DowntimeActionConfig extends FormApplication {
 
     async _updateObject(event, formData) {
         const expandedData = foundry.utils.expandObject(formData);
-        await DowntimeActionData.updateDowntime(this.options.downtimeId, expandedData);
+        console.log('CMV Downtime | event', event, formData, expandedData);
+        await DowntimeActionData.updateDowntime(this.data.id, expandedData);
         this.render();
+    }
+
+    getData() {
+        return this.data;
     }
 
     activateListeners(html) {
