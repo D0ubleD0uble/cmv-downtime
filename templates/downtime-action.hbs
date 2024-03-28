@@ -1,32 +1,56 @@
 <form>
     <p>
     <h1>Downtime Action</h1>
-    <select name="{{id}}.category">
-        <option value="Carousing - Normal">Carousing - Normal</option>
-        <option value="Carousing - Classy">Carousing - Classy</option>
-        <option value="Crafting">Crafting</option>
-        <option value="Diplomacy - Face to Face">Diplomacy - Face to Face</option>
-        <option value="Diplomacy - Letters">Diplomacy - Letters</option>
-        <option value="Diplomacy - Representative">Diplomacy - Representative</option>
-        <option value="Hiring">Hiring</option>
-        <option value="Meditation - Focus Points">Meditation - Focus Points</option>
-        <option value="Meditation - Focus Spells">Meditation - Focus Spells</option>
-        <option value="Natural Acquisitions - Fishing">Natural Acquisitions - Fishing</option>
-        <option value="Natural Acquisitions - Foraging">Natural Acquisitions - Foraging</option>
-        <option value="Natural Acquisitions - Hunting">Natural Acquisitions - Hunting</option>
-        <option value="Research - Ask Around">Research - Ask Around</option>
-        <option value="Research - Divination">Research - Divination</option>
-        <option value="Research - Hit the Books">Research - Hit the Books</option>
-        <option value="Research - Seek Within">Research - Seek Within</option>
-        <option value="Taming">Taming</option>
-    </select>
-    <label name="{{id}}.status">{{status}}</label>
-    <input type="text" value="{{character}}" name="{{id}}.character" data-dtype="String" />
-    <input type="text" value="{{description}}" name="{{id}}.description" data-dtype="String" />
-    <input type="text" value="{{location}}" name="{{id}}.location" data-dtype="String" />
-    <input type="text" value="{{costs}}" name="{{id}}.costs" data-dtype="String" />
-    <input type="text" value="{{contingencies}}" name="{{id}}.contingencies" data-dtype="String" />
-    <input type="text" value="{{rolls}}" name="{{id}}.rolls" data-dtype="String" />
+    <div>
+        <label>Downtime Category</label>
+        <select name="{{id}}.category">
+            <option value="Carousing - Normal">Carousing - Normal</option>
+            <option value="Carousing - Classy">Carousing - Classy</option>
+            <option value="Crafting">Crafting</option>
+            <option value="Diplomacy - Face to Face">Diplomacy - Face to Face</option>
+            <option value="Diplomacy - Letters">Diplomacy - Letters</option>
+            <option value="Diplomacy - Representative">Diplomacy - Representative</option>
+            <option value="Hiring">Hiring</option>
+            <option value="Meditation - Focus Points">Meditation - Focus Points</option>
+            <option value="Meditation - Focus Spells">Meditation - Focus Spells</option>
+            <option value="Natural Acquisitions - Fishing">Natural Acquisitions - Fishing</option>
+            <option value="Natural Acquisitions - Foraging">Natural Acquisitions - Foraging</option>
+            <option value="Natural Acquisitions - Hunting">Natural Acquisitions - Hunting</option>
+            <option value="Research - Ask Around">Research - Ask Around</option>
+            <option value="Research - Divination">Research - Divination</option>
+            <option value="Research - Hit the Books">Research - Hit the Books</option>
+            <option value="Research - Seek Within">Research - Seek Within</option>
+            <option value="Taming">Taming</option>
+        </select>
+    </div>
+    <div>
+        <label>Status: </label>
+        <label name="{{id}}.status">{{status}}</label>
+    </div>
+    <div>
+        <label>Character:</label>
+        <input type="text" value="{{character}}" name="{{id}}.character" data-dtype="String" />
+    </div>
+    <div>
+        <label>Description:</label>
+        <input type="text" value="{{description}}" name="{{id}}.description" data-dtype="String" />
+    </div>
+    <div>
+        <label>Location:</label>
+        <input type="text" value="{{location}}" name="{{id}}.location" data-dtype="String" />
+    </div>
+    <div>
+        <label>Costs:</label>
+        <input type="text" value="{{costs}}" name="{{id}}.costs" data-dtype="String" />
+    </div>
+    <div>
+        <label>Contingencies:</label>
+        <input type="text" value="{{contingencies}}" name="{{id}}.contingencies" data-dtype="String" />
+    </div>
+    <div>
+        <label>Rolls:</label>
+        <input type="text" value="{{rolls}}" name="{{id}}.rolls" data-dtype="String" />
+    </div>
     </p>
     <button type="button" data-action="submit"><i class="fas fa-plus"></i>"{{localize
         "CMV-Downtime.submit"}}"</button>

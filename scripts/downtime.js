@@ -97,7 +97,7 @@ class DowntimeActionData {
         }
 
         // update the database with the updated downtime
-        return game.users.get(relevantDowntime.userId)?.setFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS, update);
+        return game.users.get(relevantDowntime.userId)?.setFlag(DowntimeActions.ID, DowntimeActions.FLAGS.ACTIONS, updateData);
     }
 
     static deleteDowntime(downtimeId) {
