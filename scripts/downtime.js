@@ -87,9 +87,7 @@ class DowntimeActionData {
     }
 
     static updateDowntime(downtimeId, updateData) {
-        console.log('CMV Downtime | update', downtimeId, updateData);
         const relevantDowntime = this.allDowntimes[downtimeId];
-        console.log('CMV Downtime | save', relevantDowntime);
 
         // construct the update to send
         const update = {
@@ -158,22 +156,20 @@ class DowntimeListConfig extends FormApplication {
         }
     }
 
-    async _updateObject(event, formData) {
-        const expandedData = foundry.utils.expandObject(formData);
-        await DowntimeActionData.updateUserToDos(this.options.userId, expandedData);
-        this.render();
-    }
-
     activateListeners(html) {
         super.activateListeners(html);
         html.on('click', "[data-action]", this._handleButtonClick.bind(this));
+        window.Handlebars.registerHelper('select', function (value, options) {
+            var $el = $('<select />').html(options.fn(this));
+            $el.find('[value="' + value + '"]').attr({ 'selected': 'selected' });
+            return $el.html();
+        });
     }
 
     async _handleButtonClick(event) {
         const clickedElement = $(event.currentTarget);
         const action = clickedElement.data().action;
         const downtimeId = clickedElement.parents('[data-downtime-id]')?.data()?.downtimeId;
-        console.log('CMV Downtime | button_clicked with downtime id:', downtimeId);
 
         switch (action) {
             case 'create': {
@@ -183,9 +179,7 @@ class DowntimeListConfig extends FormApplication {
             }
 
             case 'edit': {
-                console.log('CMV Downtime | id', downtimeId);
                 var downtimeData = DowntimeActionData.getDowntimeForUser(this.options.userId, downtimeId.toString());
-                console.log('CMV Downtime | data', downtimeData);
                 new DowntimeActionConfig(downtimeData).render(true);
                 break;
             }
@@ -227,7 +221,7 @@ class DowntimeActionConfig extends FormApplication {
 
     async _updateObject(event, formData) {
         const expandedData = foundry.utils.expandObject(formData);
-        console.log('CMV Downtime | event', event, formData, expandedData);
+        this.data = expandedData[this.data.id];
         await DowntimeActionData.updateDowntime(this.data.id, expandedData);
         this.render();
     }

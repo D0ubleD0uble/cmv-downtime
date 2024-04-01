@@ -1,9 +1,13 @@
 <form>
     <p>
     <h1>Downtime Action</h1>
+    <input type="hidden" value="{{status}}" name="{{id}}.status" data-dtype="String" />
+    <input type="hidden" value="{{userId}}" name="{{id}}.userId" data-dtype="String" />
+    <input type="hidden" value="{{id}}" name="{{id}}.id" data-dtype="String" />
     <div>
         <label>Downtime Category</label>
         <select name="{{id}}.category">
+            {{#select category}}
             <option value="Carousing - Normal">Carousing - Normal</option>
             <option value="Carousing - Classy">Carousing - Classy</option>
             <option value="Crafting">Crafting</option>
@@ -21,6 +25,7 @@
             <option value="Research - Hit the Books">Research - Hit the Books</option>
             <option value="Research - Seek Within">Research - Seek Within</option>
             <option value="Taming">Taming</option>
+            {{/select}}
         </select>
     </div>
     <div>
