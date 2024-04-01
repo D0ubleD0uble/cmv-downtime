@@ -180,7 +180,7 @@ class DowntimeListConfig extends FormApplication {
 
             case 'edit': {
                 var downtimeData = DowntimeActionData.getDowntimeForUser(this.options.userId, downtimeId.toString());
-                new DowntimeActionConfig(downtimeData).render(true);
+                new DowntimeActionConfig(downtimeData, this).render(true);
                 break;
             }
 
@@ -197,9 +197,10 @@ class DowntimeListConfig extends FormApplication {
 }
 
 class DowntimeActionConfig extends FormApplication {
-    constructor(data) {
+    constructor(data, parent) {
         super();
         this.data = data;
+        this.parent = parent;
     }
 
     static get defaultOptions() {
@@ -222,7 +223,9 @@ class DowntimeActionConfig extends FormApplication {
     async _updateObject(event, formData) {
         const expandedData = foundry.utils.expandObject(formData);
         this.data = expandedData[this.data.id];
+        console.log('CMV Downtime | new data', this.data);
         await DowntimeActionData.updateDowntime(this.data.id, expandedData);
+        this.parent.render();
         this.render();
     }
 
@@ -241,6 +244,16 @@ class DowntimeActionConfig extends FormApplication {
         const downtimeId = clickedElement.parents('[data-downtime-id]')?.data()?.downtimeId;
 
         switch (action) {
+
+            case 'submit': {
+                // Working on submit
+                break;
+            }
+
+            case 'close': {
+                this.close();
+                break;
+            }
 
             default:
                 console.log('CMV Downtime | Invalid form action detected.', action);
