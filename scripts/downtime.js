@@ -152,8 +152,15 @@ class DowntimeListConfig extends FormApplication {
     }
 
     getData(options) {
-        return {
-            downtimes: DowntimeActionData.getDowntimesForUser(options.userId)
+        if (game.user.role === 4) {
+            return {
+                downtimes: DowntimeActionData.allDowntimes
+            }
+        }
+        else {
+            return {
+                downtimes: DowntimeActionData.getDowntimesForUser(options.userId)
+            }
         }
     }
 
@@ -169,6 +176,26 @@ class DowntimeListConfig extends FormApplication {
             if (status === 'draft') {
                 if (game.user.role === 4) {
                     switch (dtFieldName) {
+                        case 'gmresults': {
+                            return 'hidden';
+                        }
+
+                        case 'accept_button': {
+                            return 'hidden';
+                        }
+
+                        case 'reject_button': {
+                            return 'hidden';
+                        }
+
+                        case 'submit_button': {
+                            return 'hidden';
+                        }
+
+                        case 'close_button': {
+                            return '';
+                        }
+
                         default:
                             return 'disabled';
                     }
@@ -176,7 +203,23 @@ class DowntimeListConfig extends FormApplication {
                 else {
                     switch (dtFieldName) {
                         case 'gmresults': {
-                            return 'disabled';
+                            return 'hidden';
+                        }
+
+                        case 'accept_button': {
+                            return 'hidden';
+                        }
+
+                        case 'reject_button': {
+                            return 'hidden';
+                        }
+
+                        case 'submit_button': {
+                            return '';
+                        }
+
+                        case 'close_button': {
+                            return '';
                         }
 
                         default:
@@ -191,15 +234,77 @@ class DowntimeListConfig extends FormApplication {
                             return '';
                         }
 
+                        case 'accept_button': {
+                            return '';
+                        }
+
+                        case 'reject_button': {
+                            return '';
+                        }
+
+                        case 'submit_button': {
+                            return 'hidden';
+                        }
+
+                        case 'close_button': {
+                            return '';
+                        }
+
                         default:
                             return 'disabled';
                     }
                 }
                 else {
                     switch (dtFieldName) {
+                        case 'gmresults': {
+                            return 'hidden';
+                        }
+
+                        case 'accept_button': {
+                            return 'hidden';
+                        }
+
+                        case 'reject_button': {
+                            return 'hidden';
+                        }
+
+                        case 'submit_button': {
+                            return 'hidden';
+                        }
+
+                        case 'close_button': {
+                            return '';
+                        }
+
                         default:
                             return '';
                     }
+                }
+            }
+            else {
+                switch (dtFieldName) {
+                    case 'gmresults': {
+                        return 'disabled';
+                    }
+
+                    case 'accept_button': {
+                        return 'hidden';
+                    }
+
+                    case 'reject_button': {
+                        return 'hidden';
+                    }
+
+                    case 'submit_button': {
+                        return 'hidden';
+                    }
+
+                    case 'close_button': {
+                        return '';
+                    }
+
+                    default:
+                        return 'disabled';
                 }
             }
         });
@@ -218,7 +323,9 @@ class DowntimeListConfig extends FormApplication {
             }
 
             case 'edit': {
-                var downtimeData = DowntimeActionData.getDowntimeForUser(this.options.userId, downtimeId.toString());
+                //var downtimeData = DowntimeActionData.getDowntimeForUser(this.options.userId, downtimeId.toString());
+                var downtimes = DowntimeActionData.allDowntimes;
+                var downtimeData = downtimes[downtimeId];
                 new DowntimeActionConfig(downtimeData, this).render(true);
                 break;
             }
@@ -283,6 +390,23 @@ class DowntimeActionConfig extends FormApplication {
         const downtimeId = clickedElement.parents('[data-downtime-id]')?.data()?.downtimeId;
 
         switch (action) {
+            case 'accept': {
+                // Get downtime submission
+                var element = document.getElementsByName(this.data.id + ".status")[0];
+                element.value = "completed";
+                // Fire change for form submit
+                document.getElementsByName("DowntimeActionForm")[0].onsubmit(new Event('submit'));
+                break;
+            }
+
+            case 'reject': {
+                // Get downtime submission
+                var element = document.getElementsByName(this.data.id + ".status")[0];
+                element.value = "draft";
+                // Fire change for form submit
+                document.getElementsByName("DowntimeActionForm")[0].onsubmit(new Event('submit'));
+                break;
+            }
 
             case 'submit': {
                 // Get downtime submission
@@ -301,15 +425,5 @@ class DowntimeActionConfig extends FormApplication {
             default:
                 console.log('CMV Downtime | Invalid form action detected.', action);
         }
-    }
-
-    viewOnly() {
-        document.getElementsByName(this.data.id + '.category')[0].disabled = true;
-        document.getElementsByName(this.data.id + '.character').disabled = true;
-        document.getElementsByName(this.data.id + '.description').disabled = true;
-        document.getElementsByName(this.data.id + '.location').disabled = true;
-        document.getElementsByName(this.data.id + '.costs').disabled = true;
-        document.getElementsByName(this.data.id + '.contingencies').disabled = true;
-        document.getElementsByName(this.data.id + '.rolls').disabled = true;
     }
 }

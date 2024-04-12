@@ -54,22 +54,30 @@
     </div>
     <div>
         <label>Contingencies:</label>
-        <input type="text" value="{{contingencies}}" name="{{id}}.contingencies" data-dtype="String"
-            {{#isDowntimeDisabled 'contingencies' status userId}} {{/isDowntimeDisabled}} />
+        <textarea name="{{id}}.contingencies" data-dtype="String" {{#isDowntimeDisabled 'contingencies' status userId}}
+            {{/isDowntimeDisabled}}>{{contingencies}}</textarea>
     </div>
     <div>
         <label>Rolls:</label>
-        <input type="text" value="{{rolls}}" name="{{id}}.rolls" data-dtype="String" {{#isDowntimeDisabled 'rolls'
-            status userId}} {{/isDowntimeDisabled}} />
+        <textarea name="{{id}}.rolls" data-dtype="String" {{#isDowntimeDisabled 'rolls' status userId}}
+            {{/isDowntimeDisabled}}>{{rolls}}</textarea>
     </div>
     <div>
-        <label>GM Results Response:</label>
-        <input type="text" value="{{gmresults}}" name="{{id}}.gmresults" data-dtype="String"
-            {{#isDowntimeDisabled 'gmresults' status userId}} {{/isDowntimeDisabled}} />
+        <label {{#isDowntimeDisabled 'gmresults' status userId}} {{/isDowntimeDisabled}}>GM Results Response:</label>
+        <textarea name="{{id}}.gmresults" data-dtype="String" {{#isDowntimeDisabled 'gmresults' status userId}}
+            {{/isDowntimeDisabled}}>{{gmresults}}</textarea>
     </div>
     </p>
-    <button type="button" data-action="submit"><i class="fas fa-plus"></i>"{{localize
+    <button type="button" data-action="accept" {{#isDowntimeDisabled 'accept_button' status
+        userId}}{{/isDowntimeDisabled}}><i class="fas fa-plus"></i>"{{localize
+        "CMV-Downtime.accept"}}"</button>
+    <button type="button" data-action="reject" {{#isDowntimeDisabled 'reject_button' status
+        userId}}{{/isDowntimeDisabled}}><i class="fas fa-minus"></i>"{{localize
+        "CMV-Downtime.reject"}}"</button>
+    <button type="button" data-action="submit" {{#isDowntimeDisabled 'submit_button' status
+        userId}}{{/isDowntimeDisabled}}><i class="fas fa-plus"></i>"{{localize
         "CMV-Downtime.submit"}}"</button>
-    <button type="button" data-action="close"><i class="fas fa-minus"></i>"{{localize
+    <button type="button" data-action="close" {{#isDowntimeDisabled 'close_button' status
+        userId}}{{/isDowntimeDisabled}}><i class="fas fa-minus"></i>"{{localize
         "CMV-Downtime.close"}}"</button>
 </form>

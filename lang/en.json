@@ -5,6 +5,8 @@
         "delete-downtime": "Delete Downtime Action",
         "edit-downtime": "Edit Downtime Action",
         "submit": "Submit",
+        "accept": "Send to 'completed' status and reveal response",
+        "reject": "Return to 'draft' status",
         "close": "Close"
     }
 }

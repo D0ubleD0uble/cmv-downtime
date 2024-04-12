@@ -2,6 +2,7 @@
     <ul class="downtime-list flexcol">
         {{#each downtimes}}
         <li class="flexrow" data-downtime-id="{{id}}">
+            <label name="{{id}}.character">{{character}}</label>
             <label name="{{id}}.category">{{category}}</label>
             <label name="{{id}}.status_label">{{status}}</label>
             <button type="button" title="{{localize " CMV-Downtime.edit-downtime"}}" data-action="edit"
