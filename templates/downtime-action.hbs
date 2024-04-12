@@ -1,4 +1,4 @@
-<form>
+<form name="DowntimeActionForm">
     <p>
     <h1>Downtime Action</h1>
     <input type="hidden" value="{{status}}" name="{{id}}.status" data-dtype="String" />
@@ -6,7 +6,7 @@
     <input type="hidden" value="{{id}}" name="{{id}}.id" data-dtype="String" />
     <div>
         <label>Downtime Category</label>
-        <select name="{{id}}.category">
+        <select name="{{id}}.category" {{#isDowntimeDisabled 'category' status userId}} {{/isDowntimeDisabled}}>
             {{#select category}}
             <option value="Carousing - Normal">Carousing - Normal</option>
             <option value="Carousing - Classy">Carousing - Classy</option>
@@ -30,31 +30,42 @@
     </div>
     <div>
         <label>Status: </label>
-        <label name="{{id}}.status">{{status}}</label>
+        <label name="{{id}}.status_label">{{status}}</label>
     </div>
     <div>
         <label>Character:</label>
-        <input type="text" value="{{character}}" name="{{id}}.character" data-dtype="String" />
+        <input type="text" value="{{character}}" name="{{id}}.character" data-dtype="String"
+            {{#isDowntimeDisabled 'character' status userId}} {{/isDowntimeDisabled}} />
     </div>
     <div>
         <label>Description:</label>
-        <input type="text" value="{{description}}" name="{{id}}.description" data-dtype="String" />
+        <textarea name="{{id}}.description" data-dtype="String" {{#isDowntimeDisabled 'description' status userId}}
+            {{/isDowntimeDisabled}}>{{description}}</textarea>
     </div>
     <div>
         <label>Location:</label>
-        <input type="text" value="{{location}}" name="{{id}}.location" data-dtype="String" />
+        <input type="text" value="{{location}}" name="{{id}}.location" data-dtype="String"
+            {{#isDowntimeDisabled 'location' status userId}} {{/isDowntimeDisabled}} />
     </div>
     <div>
         <label>Costs:</label>
-        <input type="text" value="{{costs}}" name="{{id}}.costs" data-dtype="String" />
+        <input type="text" value="{{costs}}" name="{{id}}.costs" data-dtype="String" {{#isDowntimeDisabled 'costs'
+            status userId}} {{/isDowntimeDisabled}} />
     </div>
     <div>
         <label>Contingencies:</label>
-        <input type="text" value="{{contingencies}}" name="{{id}}.contingencies" data-dtype="String" />
+        <input type="text" value="{{contingencies}}" name="{{id}}.contingencies" data-dtype="String"
+            {{#isDowntimeDisabled 'contingencies' status userId}} {{/isDowntimeDisabled}} />
     </div>
     <div>
         <label>Rolls:</label>
-        <input type="text" value="{{rolls}}" name="{{id}}.rolls" data-dtype="String" />
+        <input type="text" value="{{rolls}}" name="{{id}}.rolls" data-dtype="String" {{#isDowntimeDisabled 'rolls'
+            status userId}} {{/isDowntimeDisabled}} />
+    </div>
+    <div>
+        <label>GM Results Response:</label>
+        <input type="text" value="{{gmresults}}" name="{{id}}.gmresults" data-dtype="String"
+            {{#isDowntimeDisabled 'gmresults' status userId}} {{/isDowntimeDisabled}} />
     </div>
     </p>
     <button type="button" data-action="submit"><i class="fas fa-plus"></i>"{{localize

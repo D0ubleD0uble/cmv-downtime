@@ -11,6 +11,7 @@
  * @property {string} contingencies - plans if things go wrong
  * @property {string} rolls - rolls desired to use
  * @property {string} userId - creating user of the downtime action
+ * @property {string} gmresults - gm-logged results
  */
 
 console.log("cmv-downtime | Hello World! This code runs immediately when the file is loaded.");
@@ -164,6 +165,44 @@ class DowntimeListConfig extends FormApplication {
             $el.find('[value="' + value + '"]').attr({ 'selected': 'selected' });
             return $el.html();
         });
+        window.Handlebars.registerHelper('isDowntimeDisabled', function (dtFieldName, status, userId) {
+            if (status === 'draft') {
+                if (game.user.role === 4) {
+                    switch (dtFieldName) {
+                        default:
+                            return 'disabled';
+                    }
+                }
+                else {
+                    switch (dtFieldName) {
+                        case 'gmresults': {
+                            return 'disabled';
+                        }
+
+                        default:
+                            return '';
+                    }
+                }
+            }
+            else if (status === 'submitted') {
+                if (game.user.role === 4) {
+                    switch (dtFieldName) {
+                        case 'gmresults': {
+                            return '';
+                        }
+
+                        default:
+                            return 'disabled';
+                    }
+                }
+                else {
+                    switch (dtFieldName) {
+                        default:
+                            return '';
+                    }
+                }
+            }
+        });
     }
 
     async _handleButtonClick(event) {
@@ -246,7 +285,11 @@ class DowntimeActionConfig extends FormApplication {
         switch (action) {
 
             case 'submit': {
-                // Working on submit
+                // Get downtime submission
+                var element = document.getElementsByName(this.data.id + ".status")[0];
+                element.value = "submitted";
+                // Fire change for form submit
+                document.getElementsByName("DowntimeActionForm")[0].onsubmit(new Event('submit'));
                 break;
             }
 
@@ -258,5 +301,15 @@ class DowntimeActionConfig extends FormApplication {
             default:
                 console.log('CMV Downtime | Invalid form action detected.', action);
         }
+    }
+
+    viewOnly() {
+        document.getElementsByName(this.data.id + '.category')[0].disabled = true;
+        document.getElementsByName(this.data.id + '.character').disabled = true;
+        document.getElementsByName(this.data.id + '.description').disabled = true;
+        document.getElementsByName(this.data.id + '.location').disabled = true;
+        document.getElementsByName(this.data.id + '.costs').disabled = true;
+        document.getElementsByName(this.data.id + '.contingencies').disabled = true;
+        document.getElementsByName(this.data.id + '.rolls').disabled = true;
     }
 }
