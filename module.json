@@ -1,13 +1,13 @@
 {
     "id": "cmv-downtime",
-    "title": "CMV Downtime - module for Ash of Creation",
+    "title": "CMV Downtime",
     "description": "forms for filling out and managing downtime actions.",
     "authors": [
         {
             "name": "DoubleDouble"
         }
     ],
-    "version": "0.0.1",
+    "version": "0.1.0",
     "compatibility": {
         "minimum": "11",
         "verified": "11"
