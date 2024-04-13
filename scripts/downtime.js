@@ -176,43 +176,21 @@ class DowntimeListConfig extends FormApplication {
             if (status === 'draft') {
                 if (game.user.role === 4) {
                     switch (dtFieldName) {
-                        case 'gmresults': {
-                            return 'hidden';
-                        }
-
-                        case 'accept_button': {
-                            return 'hidden';
-                        }
-
-                        case 'reject_button': {
-                            return 'hidden';
-                        }
-
-                        case 'submit_button': {
-                            return 'hidden';
-                        }
 
                         case 'close_button': {
                             return '';
                         }
 
+                        case 'label': {
+                            return '';
+                        }
+
                         default:
-                            return 'disabled';
+                            return 'hidden';
                     }
                 }
                 else {
                     switch (dtFieldName) {
-                        case 'gmresults': {
-                            return 'hidden';
-                        }
-
-                        case 'accept_button': {
-                            return 'hidden';
-                        }
-
-                        case 'reject_button': {
-                            return 'hidden';
-                        }
 
                         case 'submit_button': {
                             return '';
@@ -222,18 +200,18 @@ class DowntimeListConfig extends FormApplication {
                             return '';
                         }
 
-                        default:
+                        case 'player_edit': {
                             return '';
+                        }
+
+                        default:
+                            return 'hidden';
                     }
                 }
             }
             else if (status === 'submitted') {
                 if (game.user.role === 4) {
                     switch (dtFieldName) {
-                        case 'gmresults': {
-                            return '';
-                        }
-
                         case 'accept_button': {
                             return '';
                         }
@@ -242,69 +220,55 @@ class DowntimeListConfig extends FormApplication {
                             return '';
                         }
 
-                        case 'submit_button': {
-                            return 'hidden';
-                        }
-
                         case 'close_button': {
                             return '';
                         }
 
+                        case 'label': {
+                            return '';
+                        }
+
+                        case 'gmresults': {
+                            return '';
+                        }
+
                         default:
-                            return 'disabled';
+                            return 'hidden';
                     }
                 }
                 else {
                     switch (dtFieldName) {
-                        case 'gmresults': {
-                            return 'hidden';
-                        }
-
-                        case 'accept_button': {
-                            return 'hidden';
-                        }
-
-                        case 'reject_button': {
-                            return 'hidden';
-                        }
-
-                        case 'submit_button': {
-                            return 'hidden';
-                        }
 
                         case 'close_button': {
                             return '';
                         }
 
-                        default:
+                        case 'label': {
                             return '';
+                        }
+
+                        default:
+                            return 'hidden';
                     }
                 }
             }
             else {
                 switch (dtFieldName) {
-                    case 'gmresults': {
-                        return 'disabled';
-                    }
-
-                    case 'accept_button': {
-                        return 'hidden';
-                    }
-
-                    case 'reject_button': {
-                        return 'hidden';
-                    }
-
-                    case 'submit_button': {
-                        return 'hidden';
-                    }
 
                     case 'close_button': {
                         return '';
                     }
 
+                    case 'label': {
+                        return '';
+                    }
+
+                    case 'gmlabel': {
+                        return '';
+                    }
+
                     default:
-                        return 'disabled';
+                        return 'hidden';
                 }
             }
         });

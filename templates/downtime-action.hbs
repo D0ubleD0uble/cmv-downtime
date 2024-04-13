@@ -1,12 +1,18 @@
-<form name="DowntimeActionForm">
+<form name="DowntimeActionForm" style="min-width:300px;max-width:400px;">
     <p>
     <h1>Downtime Action</h1>
     <input type="hidden" value="{{status}}" name="{{id}}.status" data-dtype="String" />
     <input type="hidden" value="{{userId}}" name="{{id}}.userId" data-dtype="String" />
     <input type="hidden" value="{{id}}" name="{{id}}.id" data-dtype="String" />
     <div>
-        <label>Downtime Category</label>
-        <select name="{{id}}.category" {{#isDowntimeDisabled 'category' status userId}} {{/isDowntimeDisabled}}>
+        <h3>Downtime Category</h3>
+    </div>
+    <div>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'label' status
+            userId}}{{/isDowntimeDisabled}}>{{category}}</label>
+    </div>
+    <div>
+        <select name="{{id}}.category" {{#isDowntimeDisabled 'player_edit' status userId}} {{/isDowntimeDisabled}}>
             {{#select category}}
             <option value="Carousing - Normal">Carousing - Normal</option>
             <option value="Carousing - Classy">Carousing - Classy</option>
@@ -28,42 +34,71 @@
             {{/select}}
         </select>
     </div>
-    <div>
-        <label>Status: </label>
-        <label name="{{id}}.status_label">{{status}}</label>
+    <div style="margin-top:5px;">
+        <h3>Status:</h3>
+        <label style="margin-left:10px;" name="{{id}}.status_label">{{status}}</label>
+    </div>
+    <div style="margin-top:5px;">
+        <h3>Character:</h3>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'label' status
+            userId}}{{/isDowntimeDisabled}}>{{character}}</label>
     </div>
     <div>
-        <label>Character:</label>
         <input type="text" value="{{character}}" name="{{id}}.character" data-dtype="String"
-            {{#isDowntimeDisabled 'character' status userId}} {{/isDowntimeDisabled}} />
+            {{#isDowntimeDisabled 'player_edit' status userId}} {{/isDowntimeDisabled}} />
+    </div>
+    <div style="margin-top:5px;">
+        <h3>Description:</h3>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'label' status
+            userId}}{{/isDowntimeDisabled}}>{{description}}</label>
     </div>
     <div>
-        <label>Description:</label>
-        <textarea name="{{id}}.description" data-dtype="String" {{#isDowntimeDisabled 'description' status userId}}
+        <textarea name="{{id}}.description" data-dtype="String" {{#isDowntimeDisabled 'player_edit' status userId}}
             {{/isDowntimeDisabled}}>{{description}}</textarea>
     </div>
-    <div>
-        <label>Location:</label>
-        <input type="text" value="{{location}}" name="{{id}}.location" data-dtype="String"
-            {{#isDowntimeDisabled 'location' status userId}} {{/isDowntimeDisabled}} />
+    <div style="margin-top:5px;">
+        <h3>Location:</h3>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'label' status
+            userId}}{{/isDowntimeDisabled}}>{{location}}</label>
     </div>
     <div>
-        <label>Costs:</label>
-        <input type="text" value="{{costs}}" name="{{id}}.costs" data-dtype="String" {{#isDowntimeDisabled 'costs'
+        <input type="text" value="{{location}}" name="{{id}}.location" data-dtype="String"
+            {{#isDowntimeDisabled 'player_edit' status userId}} {{/isDowntimeDisabled}} />
+    </div>
+    <div style="margin-top:5px;">
+        <h3>Costs:</h3>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'label' status
+            userId}}{{/isDowntimeDisabled}}>{{costs}}</label>
+    </div>
+    <div>
+        <input type="text" value="{{costs}}" name="{{id}}.costs" data-dtype="String" {{#isDowntimeDisabled 'player_edit'
             status userId}} {{/isDowntimeDisabled}} />
     </div>
+    <div style="margin-top:5px;">
+        <h3>Contingencies:</h3>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'label' status
+            userId}}{{/isDowntimeDisabled}}>{{contingencies}}</label>
+    </div>
     <div>
-        <label>Contingencies:</label>
-        <textarea name="{{id}}.contingencies" data-dtype="String" {{#isDowntimeDisabled 'contingencies' status userId}}
+        <textarea name="{{id}}.contingencies" data-dtype="String" {{#isDowntimeDisabled 'player_edit' status userId}}
             {{/isDowntimeDisabled}}>{{contingencies}}</textarea>
     </div>
-    <div>
-        <label>Rolls:</label>
-        <textarea name="{{id}}.rolls" data-dtype="String" {{#isDowntimeDisabled 'rolls' status userId}}
-            {{/isDowntimeDisabled}}>{{rolls}}</textarea>
+    <div style="margin-top:5px;">
+        <h3>Rolls:</h3>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'label' status
+            userId}}{{/isDowntimeDisabled}}>{{rolls}}</label>
     </div>
     <div>
-        <label {{#isDowntimeDisabled 'gmresults' status userId}} {{/isDowntimeDisabled}}>GM Results Response:</label>
+        <textarea name="{{id}}.rolls" data-dtype="String" {{#isDowntimeDisabled 'player_edit' status userId}}
+            {{/isDowntimeDisabled}}>{{rolls}}</textarea>
+    </div>
+    <div style="margin-top:5px;">
+        <h3 {{#isDowntimeDisabled 'gmlabel' status userId}} {{/isDowntimeDisabled}}>GM Results Response:</h3>
+        <label style="margin-left:10px;" {{#isDowntimeDisabled 'gmlabel' status
+            userId}}{{/isDowntimeDisabled}}>{{gmresults}}</label>
+        <h3 {{#isDowntimeDisabled 'gmresults' status userId}} {{/isDowntimeDisabled}}>GM Results Response:</h3>
+    </div>
+    <div>
         <textarea name="{{id}}.gmresults" data-dtype="String" {{#isDowntimeDisabled 'gmresults' status userId}}
             {{/isDowntimeDisabled}}>{{gmresults}}</textarea>
     </div>
